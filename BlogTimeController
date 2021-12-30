@@ -1,0 +1,43 @@
+package com.example.blogtime.Controller;
+
+
+import com.example.blogtime.BlogTime.BlogTime;
+import com.example.blogtime.Service.BlogTimeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class BlogTimeController {
+
+    @Autowired
+    BlogTimeService blogTimeService;
+
+    
+
+    @GetMapping("/blogs")
+    public List<BlogTime> getAllBlogs(){
+        return blogTimeService.getBlogTimes();
+    }
+
+
+    @PostMapping("/blogs")
+    public BlogTime addBlog(@RequestBody BlogTime blogTime){
+        return blogTimeService.addBlogtime(blogTime);
+
+    }
+
+    @GetMapping("blogs/article")
+    public List<String> stringList(){
+        return blogTimeService.getAllTitles();
+    }
+
+    @GetMapping("blogs/article/{slug}")
+    public BlogTime getBySlug(@PathVariable String slug) {
+        return blogTimeService.getBySlug(slug);
+    }
+
+
+
+}
