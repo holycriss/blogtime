@@ -1,0 +1,56 @@
+package com.example.blogtime.Service;
+
+import com.example.blogtime.BlogTime.BlogTime;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+
+
+@Service
+public class BlogTimeService {
+
+
+
+    public static List<BlogTime> blogTimes = new ArrayList<>(Arrays.asList(
+
+            new BlogTime(1L,"le-journal-de-ante", "le journal de ante", "le soir du 10 janvier le..."),
+            new BlogTime(2L,"voyage-au-bout-de-l-enfer", "voyage au bout de l'enfer", "les employer sont a la rue"),
+            new BlogTime(3L,"la-terre-est-elle-plat", "la terre est elle plat", "qu'elle bande de con"),
+            new BlogTime(4L,"une-4-eme-dose","une 4 eme dose","rest for the best")
+    ));
+
+
+
+    // GET THE LIST OF ALL TITLES
+    List<String> AllTitles = blogTimes.stream().map(BlogTime::toString).collect(Collectors.toList());
+
+
+    public List<String> getAllTitles() {
+        return AllTitles;
+    }
+
+    public List<BlogTime> getBlogTimes() {
+        return blogTimes;
+    }
+
+
+    public BlogTime addBlogtime(BlogTime blogTime) {
+        blogTimes.add(blogTime);
+        return blogTime;
+    }
+
+
+    public BlogTime getBySlug(String slug) {
+        BlogTime blogTime = blogTimes.stream()
+                .filter(t -> slug.equals(t.getSlug()))
+                .findFirst()
+                .orElse(null);
+
+        return blogTime;
+    }
+}
+
+
